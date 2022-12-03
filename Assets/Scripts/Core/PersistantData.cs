@@ -38,6 +38,7 @@ namespace grimhawk.core
             set
             {
                 _localValue = value;
+                SaveToPrefs();
                 
             }
             get
@@ -142,7 +143,7 @@ namespace grimhawk.core
                     case SettingTypes._vector4:
                     case SettingTypes._color:
                     case SettingTypes._quaternion:
-                         _localValue = Get(_savedKey, _localValue);
+                         _localValue = Get(_savedKey);
                         break;
                 }
             }
@@ -176,9 +177,9 @@ namespace grimhawk.core
                 
             }
         }
-        static T Get(string key, T defaultValue)
+        static T Get(string key)
         {
-            return JsonUtility.FromJson<T>(PlayerPrefs.GetString(key, JsonUtility.ToJson(defaultValue)));
+            return JsonUtility.FromJson<T>(PlayerPrefs.GetString(key));
         }
 
         static void Set(string key, T value)
