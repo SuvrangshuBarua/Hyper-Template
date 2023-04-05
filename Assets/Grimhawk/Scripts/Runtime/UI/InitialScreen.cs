@@ -10,6 +10,10 @@ public class InitialScreen : UIScreen
     [SerializeField] private AnimatableUI<TextMeshProUGUI> _levelCounter;
     [SerializeField] private AnimatableUI<Button> _playButton;
 
+    private void Start()
+    {
+        UpdateLevelCounter();
+    }
     private void UpdateLevelCounter()
     {
         _levelCounter.UIComponent.text = "Level ";// + (SaveLoadManager.Getlevel() + 1);

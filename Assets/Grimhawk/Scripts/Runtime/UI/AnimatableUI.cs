@@ -7,9 +7,10 @@ using UnityEngine.EventSystems;
 using DG.Tweening;
 using System;
 
+[Serializable]
 public class AnimatableUI<T> : ISerializationCallbackReceiver where T : UIBehaviour
 {
-    [SerializeField] public T UIComponent { get; private set; }
+    [field :SerializeField] public T UIComponent { get; private set; }
 
     [InfoBox("If true, GameObject would set false at the end of the out animation or vice verse")]
     [SerializeField] private bool changeActiveStatusWhileAnimating;
@@ -42,7 +43,7 @@ public class AnimatableUI<T> : ISerializationCallbackReceiver where T : UIBehavi
 
     #region Type Checks
     private bool AnimationTypeIsMove => animationType.HasFlag(AnimationType.Move);
-    private bool AnimatonTypeIsScale => animationType.HasFlag(AnimationType.Scale);
+    private bool AnimationTypeIsScale => animationType.HasFlag(AnimationType.Scale);
     private bool AnimationTypeIsFade => animationType.HasFlag(AnimationType.Fade);
     private bool AnimationTypeIsColor => animationType.HasFlag(AnimationType.Color);
     #endregion
@@ -72,7 +73,7 @@ public class AnimatableUI<T> : ISerializationCallbackReceiver where T : UIBehavi
     {
         if (changeActiveStatusWhileAnimating) GameObject.SetActive(true);
         if (AnimationTypeIsMove) rectTransform.DOAnchorPos(inPosition, duration);
-        if (AnimatonTypeIsScale) rectTransform.DOScale(inScale, duration);
+        if (AnimationTypeIsScale) rectTransform.DOScale(inScale, duration);
         if (AnimationTypeIsColor) Image.DOColor(inColor, duration);  
         if (AnimationTypeIsFade) Image.DOFade(inAlpha, duration);
         yield return new WaitForSeconds(duration);
@@ -81,7 +82,7 @@ public class AnimatableUI<T> : ISerializationCallbackReceiver where T : UIBehavi
     {
         
         if (AnimationTypeIsMove) rectTransform.DOAnchorPos(outPosition, duration);
-        if (AnimatonTypeIsScale) rectTransform.DOScale(outScale, duration);
+        if (AnimationTypeIsScale) rectTransform.DOScale(outScale, duration);
         if (AnimationTypeIsColor) Image.DOColor(outColor, duration);
         if (AnimationTypeIsFade) Image.DOFade(outAlpha, duration);
         if (changeActiveStatusWhileAnimating) GameObject.SetActive(false);
