@@ -5,7 +5,7 @@ using grimhawk.core;
 
 namespace grimhawk.managers
 {
-    public class SaveManager : SingletonBehavior<SaveManager>
+    public class SaveManager : GameBehavior
     {
         private PersistantData<int> _level;
 

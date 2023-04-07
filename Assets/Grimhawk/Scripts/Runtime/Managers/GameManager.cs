@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using grimhawk.core;
 using grimhawk.tools.gameevent;
+using NaughtyAttributes;
+using MyBox;
 
 namespace grimhawk.managers
 {
@@ -23,17 +25,21 @@ namespace grimhawk.managers
         #endregion
 
         #region Private Variables 
-        [Header("StateEvent")]
-        [SerializeField] private GameEvent _OnDataLoadedEvent;
-        [SerializeField] private GameEvent _OnSceneLoadBeginEvent;
-        [SerializeField] private GameEvent _OnSceneLoadedEvent;
-        [SerializeField] private GameEvent _OnLevelStartedEvent;
-        [SerializeField] private GameEvent _OnStepOneCompleteEvent;
-        [SerializeField] private GameEvent _OnStepTwoCompleteEvent;
-        [SerializeField] private GameEvent _OnLevelCompleteEvent;
-        [SerializeField] private GameEvent _OnLevelFailedEvent;
+        [SerializeField, NaughtyAttributes.Foldout("State Events")] private GameEvent _OnDataLoadedEvent;
+        [SerializeField, NaughtyAttributes.Foldout("State Events")] private GameEvent _OnSceneLoadBeginEvent;
+        [SerializeField, NaughtyAttributes.Foldout("State Events")] private GameEvent _OnSceneLoadedEvent;
+        [SerializeField, NaughtyAttributes.Foldout("State Events")] private GameEvent _OnLevelStartedEvent;
+        [SerializeField, NaughtyAttributes.Foldout("State Events")] private GameEvent _OnStepOneCompleteEvent;
+        [SerializeField, NaughtyAttributes.Foldout("State Events")] private GameEvent _OnStepTwoCompleteEvent;
+        [SerializeField, NaughtyAttributes.Foldout("State Events")] private GameEvent _OnLevelCompleteEvent;
+        [SerializeField, NaughtyAttributes.Foldout("State Events")] private GameEvent _OnLevelFailedEvent;
 
+        [Separator("Managers")]
+        [Label("UI Manager")]
         public UIManager _uiManager;
+        public SaveManager _saveManager;
+        public SceneManager _sceneManager;
+
         #endregion
 
         #region Monobehavior
@@ -56,7 +62,7 @@ namespace grimhawk.managers
         {
             yield return null;
 
-            _uiManager = GetComponentInChildren<UIManager>();
+            
         }
 
         private void OnEnable()
