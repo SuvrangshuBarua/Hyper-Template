@@ -33,11 +33,11 @@ public class SceneManager : GameBehavior
         base.OnDisable();
         SceneMaker.activeSceneChanged -= HandleSceneChange;
     }
-    public void LoadScene(string SceneName,
+    public void LoadScene(int buildIndex,
                           SceneTransitionMode transitionMode = SceneTransitionMode.None,
                           LoadSceneMode mode = LoadSceneMode.Single)
     {
-        levelLoadOperation = SceneMaker.LoadSceneAsync(SceneName);
+        levelLoadOperation = SceneMaker.LoadSceneAsync(buildIndex);
 
         Transition transition = transitions.Find((transition) => transition.mode == transitionMode);
         if (transition != null)

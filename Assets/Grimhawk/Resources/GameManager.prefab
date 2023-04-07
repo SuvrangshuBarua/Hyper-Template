@@ -2157,7 +2157,7 @@ GameObject:
   - component: {fileID: 7715083033929799884}
   - component: {fileID: 1214606416805841601}
   m_Layer: 0
-  m_Name: SaveManager
+  m_Name: LevelManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2253,5 +2253,5 @@ MonoBehaviour:
   _OnLevelFailedEvent: {fileID: 11400000, guid: 8beb58b7953233e4f852315ff88f5bdd,
     type: 2}
   _uiManager: {fileID: 351210210576674595}
-  _saveManager: {fileID: 1214606416805841601}
+  _levelManager: {fileID: 1214606416805841601}
   _sceneManager: {fileID: 2852735778378370671}

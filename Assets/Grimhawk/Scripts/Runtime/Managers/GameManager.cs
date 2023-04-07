@@ -37,7 +37,7 @@ namespace grimhawk.managers
         [Separator("Managers")]
         [Label("UI Manager")]
         public UIManager _uiManager;
-        public SaveManager _saveManager;
+        public LevelManager _levelManager;
         public SceneManager _sceneManager;
 
         #endregion
