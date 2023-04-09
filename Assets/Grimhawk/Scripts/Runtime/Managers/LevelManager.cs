@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using grimhawk.core;
+using NaughtyAttributes;
+using System;
 #if SUPERSONIC_WISDOM_SDK_INSTALLED
 //using SupersonicWisdomSDK;
 #endif
@@ -15,7 +17,10 @@ namespace grimhawk.managers
         private const string saveFileName = "_LevelNumber";
         [SerializeField]
         private int totalLevelNumber = 5;
-        public int Level {
+        [SerializeField]
+        private SceneTransitionMode _levelLoadStyle = SceneTransitionMode.None;
+        public int Level
+        {
             private set
             {
                 if (_level == null)
@@ -41,22 +46,37 @@ namespace grimhawk.managers
         private void Awake()
         {
             Input.backButtonLeavesApp = true;
-
-            _gameManager.OnDataLoadedEvent.Raise();
         }
         private int GetSceneIndex()
         {
             return (Level % totalLevelNumber) + 1;
         }
+        public int GetLevel()
+        {
+            return Level + 1;
+        }
         private void OnWishdomReady()
         {
-            _gameManager._sceneManager.LoadScene(GetSceneIndex());
+            _gameManager._sceneManager.LoadScene(GetSceneIndex(), _levelLoadStyle);
+        }
+        public void Initialize(Action OnLevelDataLoaded)
+        {
+            //TODO: DebugLog Colorizer class 
+#if UNITY_EDITOR
+            Debug.Log($"<color=white>--- You Are Playing Level : {GetSceneIndex()} ---</color>");
+#endif
+            OnLevelDataLoaded?.Invoke();
         }
         protected override void OnDataLoaded()
         {
             base.OnDataLoaded();
             OnWishdomReady();
         }
+        protected override void OnSceneLoadBegin()
+        {
+            base.OnSceneLoadBegin();
+        }
+        
     }
 }
 

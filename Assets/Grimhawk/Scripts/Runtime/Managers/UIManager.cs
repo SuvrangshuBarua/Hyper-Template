@@ -21,6 +21,7 @@ namespace grimhawk.managers
         private IEnumerator Start()
         {
             yield return null;
+            
         }
         public IEnumerator ChangeUI(UIScreen uiScreen)
         {
@@ -40,7 +41,12 @@ namespace grimhawk.managers
                 _ => throw new ArgumentOutOfRangeException(nameof(screen), screen, null)
             };
 
-            return ChangeUI(screen);
+            return ChangeUI(uiScreen);
+        }
+        protected override void OnSceneLoaded()
+        {
+            base.OnSceneLoaded();
+            StartCoroutine(ChangeUI(MainScreens.Initial));
         }
         public enum MainScreens
         {

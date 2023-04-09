@@ -16,7 +16,7 @@ public class InitialScreen : UIScreen
     }
     private void UpdateLevelCounter()
     {
-        _levelCounter.UIComponent.text = "Level ";// + (SaveLoadManager.Getlevel() + 1);
+        _levelCounter.UIComponent.text = "Level " + _gameManager._levelManager.GetLevel();// + (SaveLoadManager.Getlevel() + 1);
     }
     protected override void OnEnable()
     {
@@ -33,12 +33,14 @@ public class InitialScreen : UIScreen
         gameObject.SetActive(true);
         StartCoroutine(_levelCounter.PlayInAnimation(1f));
         yield return StartCoroutine(_playButton.PlayInAnimation(1f));
+        
     }
 
     public override IEnumerator PlayOutAnimation()
     {    
         StartCoroutine(_levelCounter.PlayOutAnimation(1f));
         yield return StartCoroutine(_playButton.PlayOutAnimation(1f));
+        
         gameObject.SetActive(false);
     }
     private void OnPlayButtonPressed()

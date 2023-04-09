@@ -14,6 +14,7 @@ public class SuccessScreen : UIScreen
     [SerializeField] private AnimatableUI<TextMeshProUGUI> _reactionText;
 
     [SerializeField] private Sprite[] _happyEmojis;
+
     public override IEnumerator PlayInAnimation()
     {
         _happyEmoji.Image.sprite = _happyEmojis.GetRandom();

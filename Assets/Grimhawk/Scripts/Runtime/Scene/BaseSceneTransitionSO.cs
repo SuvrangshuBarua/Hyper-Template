@@ -19,6 +19,6 @@ public abstract class BaseSceneTransitionSO : ScriptableObject
         GameObject child = new GameObject("Transition Image");
         child.transform.SetParent(parent.transform, false);
 
-        return child.GetComponent<Image>();
+        return child.AddComponent<Image>();
     }
 }

@@ -62,6 +62,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -131,6 +132,8 @@ MonoBehaviour:
     outAlpha: 0
     inColor: {r: 0, g: 0, b: 0, a: 0}
     outColor: {r: 0, g: 0, b: 0, a: 0}
+    inEase: 1
+    outEase: 1
   _happyEmoji:
     <UIComponent>k__BackingField: {fileID: 1815073109}
     changeActiveStatusWhileAnimating: 1
@@ -145,6 +148,8 @@ MonoBehaviour:
     outAlpha: 0
     inColor: {r: 0, g: 0, b: 0, a: 0}
     outColor: {r: 0, g: 0, b: 0, a: 0}
+    inEase: 1
+    outEase: 1
   _nextLevelButton:
     <UIComponent>k__BackingField: {fileID: 1051149397}
     changeActiveStatusWhileAnimating: 1
@@ -159,6 +164,8 @@ MonoBehaviour:
     outAlpha: 0
     inColor: {r: 0, g: 0, b: 0, a: 0}
     outColor: {r: 0, g: 0, b: 0, a: 0}
+    inEase: 1
+    outEase: 1
   _reactionText:
     <UIComponent>k__BackingField: {fileID: 1578694151}
     changeActiveStatusWhileAnimating: 1
@@ -173,6 +180,8 @@ MonoBehaviour:
     outAlpha: 0
     inColor: {r: 0, g: 0, b: 0, a: 0}
     outColor: {r: 0, g: 0, b: 0, a: 0}
+    inEase: 1
+    outEase: 1
   _happyEmojis:
   - {fileID: 21300000, guid: ae8a5bdf1b3a4f646b47c8aeebd9d598, type: 3}
   - {fileID: 21300000, guid: fea10c82e2efda148a60abbaa46f5ab0, type: 3}
@@ -1152,7 +1161,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1478198922}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
@@ -1185,6 +1194,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -1254,6 +1264,8 @@ MonoBehaviour:
     outAlpha: 0
     inColor: {r: 0, g: 0, b: 0, a: 0}
     outColor: {r: 0, g: 0, b: 0, a: 0}
+    inEase: 1
+    outEase: 1
   _playButton:
     <UIComponent>k__BackingField: {fileID: 1544066975}
     changeActiveStatusWhileAnimating: 1
@@ -1268,6 +1280,8 @@ MonoBehaviour:
     outAlpha: 0
     inColor: {r: 0, g: 0, b: 0, a: 0}
     outColor: {r: 0, g: 0, b: 0, a: 0}
+    inEase: 5
+    outEase: 6
 --- !u!1 &1544066973
 GameObject:
   m_ObjectHideFlags: 0
@@ -1286,7 +1300,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1544066974
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1305,7 +1319,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 620}
+  m_AnchoredPosition: {x: 0, y: -100}
   m_SizeDelta: {x: 400, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1544066977
@@ -1740,6 +1754,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -1809,6 +1824,8 @@ MonoBehaviour:
     outAlpha: 0
     inColor: {r: 0, g: 0, b: 0, a: 0}
     outColor: {r: 0, g: 0, b: 0, a: 0}
+    inEase: 1
+    outEase: 1
   _sadEmoji:
     <UIComponent>k__BackingField: {fileID: 102887564}
     changeActiveStatusWhileAnimating: 1
@@ -1823,6 +1840,8 @@ MonoBehaviour:
     outAlpha: 0
     inColor: {r: 0, g: 0, b: 0, a: 0}
     outColor: {r: 0, g: 0, b: 0, a: 0}
+    inEase: 1
+    outEase: 1
   _retryButton:
     <UIComponent>k__BackingField: {fileID: 1056904509}
     changeActiveStatusWhileAnimating: 1
@@ -1837,6 +1856,8 @@ MonoBehaviour:
     outAlpha: 0
     inColor: {r: 0, g: 0, b: 0, a: 0}
     outColor: {r: 0, g: 0, b: 0, a: 0}
+    inEase: 1
+    outEase: 1
   _reactionText:
     <UIComponent>k__BackingField: {fileID: 1178276232}
     changeActiveStatusWhileAnimating: 1
@@ -1851,6 +1872,8 @@ MonoBehaviour:
     outAlpha: 0
     inColor: {r: 0, g: 0, b: 0, a: 0}
     outColor: {r: 0, g: 0, b: 0, a: 0}
+    inEase: 1
+    outEase: 1
   _sadEmojis:
   - {fileID: 21300000, guid: 4992c544364625746a20a5af651eec7b, type: 3}
   - {fileID: 21300000, guid: 67b5c520997d48e4ea4b7efdebbb57e7, type: 3}
@@ -1877,7 +1900,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2111267850
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1895,7 +1918,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -350}
+  m_AnchoredPosition: {x: 0, y: 100}
   m_SizeDelta: {x: 0, y: 82}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &2111267852
@@ -1996,6 +2019,53 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &2216435326427737058
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7265802472460122980}
+  - component: {fileID: 5924704834025318457}
+  m_Layer: 0
+  m_Name: InputManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7265802472460122980
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2216435326427737058}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6996146314910293117}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5924704834025318457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2216435326427737058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f749e265a97556c4b8a5a61ac9351424, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectivePixelCount: 15
+  enableGesture: 0
+  enableDrag: 0
 --- !u!1 &3966782204600719403
 GameObject:
   m_ObjectHideFlags: 0
@@ -2103,6 +2173,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -2118,7 +2189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 1
+  m_UiScaleMode: 0
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1090, y: 2400}
@@ -2190,6 +2261,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1395d937349cbcb4495338f63b6ffb43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  totalLevelNumber: 1
+  _levelLoadStyle: 1
 --- !u!1 &7983783552166063976
 GameObject:
   m_ObjectHideFlags: 0
@@ -2222,6 +2295,7 @@ Transform:
   - {fileID: 8470544097558003182}
   - {fileID: 7715083033929799884}
   - {fileID: 9055949198989908271}
+  - {fileID: 7265802472460122980}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2255,3 +2329,4 @@ MonoBehaviour:
   _uiManager: {fileID: 351210210576674595}
   _levelManager: {fileID: 1214606416805841601}
   _sceneManager: {fileID: 2852735778378370671}
+  _inputManager: {fileID: 5924704834025318457}

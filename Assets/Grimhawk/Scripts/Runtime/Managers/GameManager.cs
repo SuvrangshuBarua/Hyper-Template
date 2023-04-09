@@ -8,6 +8,7 @@ using MyBox;
 
 namespace grimhawk.managers
 {
+    [DefaultExecutionOrder(-1000000)]
     public class GameManager : GameEventListener
     {
         #region Public Variables
@@ -39,6 +40,8 @@ namespace grimhawk.managers
         public UIManager _uiManager;
         public LevelManager _levelManager;
         public SceneManager _sceneManager;
+        public InputManager _inputManager;
+
 
         #endregion
 
@@ -61,8 +64,11 @@ namespace grimhawk.managers
         private IEnumerator Start()
         {
             yield return null;
+            Instance._levelManager.Initialize(() =>
+            {
+                Instance.OnDataLoadedEvent.Raise();
+            });
 
-            
         }
 
         private void OnEnable()
@@ -81,6 +87,8 @@ namespace grimhawk.managers
             GameManager gameManager = Instantiate(Resources.Load<GameManager>("GameManager"));
 
             // TODO : Also initialize any other scripts that shall be useful
+
+            
         }
         
         #endregion

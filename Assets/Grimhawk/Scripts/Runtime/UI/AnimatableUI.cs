@@ -25,6 +25,7 @@ public class AnimatableUI<T> : ISerializationCallbackReceiver where T : UIBehavi
     #region Backing Field
     [SerializeField, HideInInspector] private RectTransform rectTransform;
     [SerializeField, HideInInspector] private Image image;
+    
     #endregion
 
     #region Animation Params
@@ -39,6 +40,9 @@ public class AnimatableUI<T> : ISerializationCallbackReceiver where T : UIBehavi
 
     [SerializeField, ShowIf("AnimationTypeIsColor"), AllowNesting] private Color inColor;
     [SerializeField, ShowIf("AnimationTypeIsColor"), AllowNesting] private Color outColor;
+
+    [SerializeField] private Ease inEase = Ease.Linear;
+    [SerializeField] private Ease outEase = Ease.Linear;
     #endregion
 
     #region Type Checks
@@ -72,21 +76,21 @@ public class AnimatableUI<T> : ISerializationCallbackReceiver where T : UIBehavi
     public IEnumerator PlayInAnimation(float duration)
     {
         if (changeActiveStatusWhileAnimating) GameObject.SetActive(true);
-        if (AnimationTypeIsMove) rectTransform.DOAnchorPos(inPosition, duration);
-        if (AnimationTypeIsScale) rectTransform.DOScale(inScale, duration);
-        if (AnimationTypeIsColor) Image.DOColor(inColor, duration);  
-        if (AnimationTypeIsFade) Image.DOFade(inAlpha, duration);
+        if (AnimationTypeIsMove) rectTransform.DOAnchorPos(inPosition, duration).SetEase(inEase);
+        if (AnimationTypeIsScale) rectTransform.DOScale(inScale, duration).SetEase(inEase);
+        if (AnimationTypeIsColor) Image.DOColor(inColor, duration).SetEase(inEase);  
+        if (AnimationTypeIsFade) Image.DOFade(inAlpha, duration).SetEase(inEase);
         yield return new WaitForSeconds(duration);
     }
     public IEnumerator PlayOutAnimation(float duration)
     {
         
-        if (AnimationTypeIsMove) rectTransform.DOAnchorPos(outPosition, duration);
-        if (AnimationTypeIsScale) rectTransform.DOScale(outScale, duration);
-        if (AnimationTypeIsColor) Image.DOColor(outColor, duration);
-        if (AnimationTypeIsFade) Image.DOFade(outAlpha, duration);
-        if (changeActiveStatusWhileAnimating) GameObject.SetActive(false);
+        if (AnimationTypeIsMove) rectTransform.DOAnchorPos(outPosition, duration).SetEase(outEase);
+        if (AnimationTypeIsScale) rectTransform.DOScale(outScale, duration).SetEase(outEase);
+        if (AnimationTypeIsColor) Image.DOColor(outColor, duration).SetEase(outEase);
+        if (AnimationTypeIsFade) Image.DOFade(outAlpha, duration).SetEase(outEase);     
         yield return new WaitForSeconds(duration);
+        if (changeActiveStatusWhileAnimating) GameObject.SetActive(false);
     }    
     #endregion
     [Flags]

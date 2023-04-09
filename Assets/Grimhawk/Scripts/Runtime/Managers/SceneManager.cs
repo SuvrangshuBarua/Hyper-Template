@@ -19,8 +19,10 @@ public class SceneManager : GameBehavior
 
     private void Awake()
     {
+        
         transitionCanvas = GetComponent<Canvas>();
         transitionCanvas.enabled = false;
+        
     }
 
     protected override void OnEnable()
@@ -46,18 +48,23 @@ public class SceneManager : GameBehavior
             transitionCanvas.enabled = true;
             activeTransition = transition.animationSO;
             StartCoroutine(Exit());
+            
         }
         else
         {
+#if UNITY_EDITOR
             Debug.LogWarning($"No transition found for" +
                 $" TransitionMode {transitionMode}!" +
-                $" Maybe you are misssing a configuration?");
+                $" OnSceneLoadedEvent Raised Unconditionally!");
+#endif
+            _gameManager.OnSceneLoadedEvent.Raise();
         }
     }
     private IEnumerator Exit()
     {
         yield return StartCoroutine(activeTransition.SceneExitAnimation(transitionCanvas));
         levelLoadOperation.allowSceneActivation = true;
+        _gameManager.OnSceneLoadedEvent.Raise();
     }
     private IEnumerator Entry()
     {
