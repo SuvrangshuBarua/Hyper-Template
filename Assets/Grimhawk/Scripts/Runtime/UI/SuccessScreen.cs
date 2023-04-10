@@ -15,6 +15,16 @@ public class SuccessScreen : UIScreen
 
     [SerializeField] private Sprite[] _happyEmojis;
 
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        _nextLevelButton.UIComponent.onClick.AddListener(OnNextLevel);
+    }
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        _nextLevelButton.UIComponent.onClick.RemoveListener(OnNextLevel);
+    }
     public override IEnumerator PlayInAnimation()
     {
         _happyEmoji.Image.sprite = _happyEmojis.GetRandom();
@@ -30,10 +40,23 @@ public class SuccessScreen : UIScreen
         gameObject.SetActive(false);
         yield break;
     }
-
+    public override void Reset()
+    {
+        base.Reset();
+        _background.Reset();
+        _happyEmoji.Reset();
+        _nextLevelButton.Reset();
+        _reactionText.Reset();
+    }
     public void OnNextLevel()
     {
         //Report Level should be iterated to next
         //Handle LevelManager Load Next Level Logic
+        _gameManager._levelManager.LoadLevel();
+    }
+    protected override void OnSceneLoaded()
+    {
+        base.OnSceneLoaded();
+        Reset();
     }
 }

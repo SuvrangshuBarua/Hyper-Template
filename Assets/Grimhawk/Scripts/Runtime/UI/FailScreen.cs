@@ -14,6 +14,17 @@ public class FailScreen : UIScreen
     [SerializeField] private AnimatableUI<TextMeshProUGUI> _reactionText;
 
     [SerializeField] private Sprite[] _sadEmojis;
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        _retryButton.UIComponent.onClick.AddListener(OnRetry);
+    }
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        _retryButton.UIComponent.onClick.RemoveListener(OnRetry);
+    }
     public override IEnumerator PlayInAnimation()
     {
         _sadEmoji.Image.sprite = _sadEmojis.GetRandom();
@@ -29,8 +40,22 @@ public class FailScreen : UIScreen
         gameObject.SetActive(false);
         yield break;
     }
+    public override void Reset()
+    {
+        base.Reset();
+        _background.Reset();
+        _sadEmoji.Reset();
+        _retryButton.Reset();
+        _reactionText.Reset();
+    }
     public void OnRetry()
     {
         //Handle LevelManager Code to Reload Same Level
+        _gameManager._levelManager.LoadLevel();
+    }
+    protected override void OnSceneLoaded()
+    {
+        base.OnSceneLoaded();
+        Reset();
     }
 }

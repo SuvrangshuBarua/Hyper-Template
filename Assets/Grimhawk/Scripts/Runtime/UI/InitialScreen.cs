@@ -12,7 +12,7 @@ public class InitialScreen : UIScreen
 
     private void Start()
     {
-        UpdateLevelCounter();
+        
     }
     private void UpdateLevelCounter()
     {
@@ -31,6 +31,7 @@ public class InitialScreen : UIScreen
     public override IEnumerator PlayInAnimation()
     {
         gameObject.SetActive(true);
+        UpdateLevelCounter();
         StartCoroutine(_levelCounter.PlayInAnimation(1f));
         yield return StartCoroutine(_playButton.PlayInAnimation(1f));
         
@@ -45,6 +46,6 @@ public class InitialScreen : UIScreen
     }
     private void OnPlayButtonPressed()
     {
-        StartCoroutine(this.PlayOutAnimation());
+        StartCoroutine(_gameManager._uiManager.ChangeUI(this));
     }
 }

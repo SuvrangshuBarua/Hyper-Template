@@ -6,6 +6,7 @@ using NaughtyAttributes;
 using UnityEngine.EventSystems;
 using DG.Tweening;
 using System;
+using MyBox;
 
 [Serializable]
 public class AnimatableUI<T> : ISerializationCallbackReceiver where T : UIBehaviour
@@ -91,7 +92,15 @@ public class AnimatableUI<T> : ISerializationCallbackReceiver where T : UIBehavi
         if (AnimationTypeIsFade) Image.DOFade(outAlpha, duration).SetEase(outEase);     
         yield return new WaitForSeconds(duration);
         if (changeActiveStatusWhileAnimating) GameObject.SetActive(false);
-    }    
+    } 
+    public void Reset()
+    {
+        if (changeActiveStatusWhileAnimating) GameObject.SetActive(false);
+        if (AnimationTypeIsMove) rectTransform.anchoredPosition = outPosition;
+        if (AnimationTypeIsScale) rectTransform.localScale = outScale;
+        if (AnimationTypeIsColor) Image.color = outColor;
+        if (AnimationTypeIsFade) Image.SetAlpha(outAlpha);
+    }
     #endregion
     [Flags]
     enum AnimationType

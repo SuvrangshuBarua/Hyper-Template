@@ -47,6 +47,10 @@ namespace grimhawk.ui
         #region Abstact Method
         public abstract IEnumerator PlayInAnimation();
         public abstract IEnumerator PlayOutAnimation();
+        public virtual void Reset()
+        {
+
+        }
         #endregion
         
     }

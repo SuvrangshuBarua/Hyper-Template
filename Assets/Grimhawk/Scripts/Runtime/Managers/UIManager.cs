@@ -26,7 +26,9 @@ namespace grimhawk.managers
         public IEnumerator ChangeUI(UIScreen uiScreen)
         {
             if (ActiveScreen)
-                yield return StartCoroutine(ActiveScreen.PlayOutAnimation());
+                if(ActiveScreen.isActiveAndEnabled)
+                    yield return StartCoroutine(ActiveScreen.PlayOutAnimation());
+
             ActiveScreen = uiScreen;
             if(ActiveScreen)
                 yield return StartCoroutine(ActiveScreen.PlayInAnimation());
