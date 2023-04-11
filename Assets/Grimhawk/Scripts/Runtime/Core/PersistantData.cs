@@ -200,7 +200,88 @@ namespace grimhawk.core
             _quaternion,
             _undefined
         }
+        #region Refactor These Methods
+        public static long GetLong(string key, long defaultValue)
+        {
+            int lowBits, highBits;
+            SplitLong(defaultValue, out lowBits, out highBits);
+            lowBits = PlayerPrefs.GetInt(key + "_lowBits", lowBits);
+            highBits = PlayerPrefs.GetInt(key + "_highBits", highBits);
+
+            // unsigned, to prevent loss of sign bit.
+            ulong ret = (uint)highBits;
+            ret = (ret << 32);
+            return (long)(ret | (ulong)(uint)lowBits);
+        }
+
+        public static long GetLong(string key)
+        {
+            int lowBits = PlayerPrefs.GetInt(key + "_lowBits");
+            int highBits = PlayerPrefs.GetInt(key + "_highBits");
+
+            // unsigned, to prevent loss of sign bit.
+            ulong ret = (uint)highBits;
+            ret = (ret << 32);
+            return (long)(ret | (ulong)(uint)lowBits);
+        }
+
+        public static ulong GetuLong(string key, ulong defaultValue)
+        {
+            int lowBits, highBits;
+            SplituLong(defaultValue, out lowBits, out highBits);
+            lowBits = PlayerPrefs.GetInt(key + "_lowBits", lowBits);
+            highBits = PlayerPrefs.GetInt(key + "_highBits", highBits);
+
+            // unsigned, to prevent loss of sign bit.
+            ulong ret = (uint)highBits;
+            ret = (ret << 64);
+            return (ulong)(ret | (ulong)(uint)lowBits);
+        }
+
+        public static ulong GetuLong(string key)
+        {
+            int lowBits = PlayerPrefs.GetInt(key + "_lowBits");
+            int highBits = PlayerPrefs.GetInt(key + "_highBits");
+
+            // unsigned, to prevent loss of sign bit.
+            ulong ret = (uint)highBits;
+            ret = (ret << 64);
+            return (ulong)(ret | (ulong)(uint)lowBits);
+        }
+
+        private static void SplitLong(long input, out int lowBits, out int highBits)
+        {
+            // unsigned everything, to prevent loss of sign bit.
+            lowBits = (int)(uint)(ulong)input;
+            highBits = (int)(uint)(input >> 32);
+        }
+
+        private static void SplituLong(ulong input, out int lowBits, out int highBits)
+        {
+            // unsigned everything, to prevent loss of sign bit.
+            lowBits = (int)(uint)(ulong)input;
+            highBits = (int)(uint)(input >> 64);
+        }
+
+        public static void SetLong(string key, long value)
+        {
+            int lowBits, highBits;
+            SplitLong(value, out lowBits, out highBits);
+            PlayerPrefs.SetInt(key + "_lowBits", lowBits);
+            PlayerPrefs.SetInt(key + "_highBits", highBits);
+        }
+
+        public static void SetuLong(string key, ulong value)
+        {
+            int lowBits, highBits;
+            SplituLong(value, out lowBits, out highBits);
+            PlayerPrefs.SetInt(key + "_lowBits", lowBits);
+            PlayerPrefs.SetInt(key + "_highBits", highBits);
+        }
+        #endregion
     }
-    
+
+
+
 }
 

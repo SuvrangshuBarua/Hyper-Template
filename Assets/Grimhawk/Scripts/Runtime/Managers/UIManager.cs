@@ -26,13 +26,13 @@ namespace grimhawk.managers
         }
         public IEnumerator ChangeUI(UIScreen uiScreen)
         {
+            
             if (ActiveScreen)
                 if(ActiveScreen.isActiveAndEnabled)
                 {
                     ActiveScreen.Reset();
                     yield return StartCoroutine(ActiveScreen.PlayOutAnimation());
-                }
-                    
+                }                 
 
             ActiveScreen = uiScreen;
             if(ActiveScreen)
@@ -55,6 +55,11 @@ namespace grimhawk.managers
         {
             base.OnSceneLoaded();
             StartCoroutine(ChangeUI(MainScreens.Initial));
+        }
+        protected override void OnLevelStarted()
+        {
+            base.OnLevelStarted();
+            StartCoroutine(_gameManager._uiManager.ChangeUI(UIManager.MainScreens.HUD));
         }
         public enum MainScreens
         {

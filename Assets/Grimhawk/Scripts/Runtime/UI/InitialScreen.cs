@@ -4,16 +4,13 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using grimhawk.managers;
 
 public class InitialScreen : UIScreen
 {
     [SerializeField] private AnimatableUI<TextMeshProUGUI> _levelCounter;
     [SerializeField] private AnimatableUI<Button> _playButton;
 
-    private void Start()
-    {
-        
-    }
     private void UpdateLevelCounter()
     {
         _levelCounter.UIComponent.text = "Level " + _gameManager._levelManager.GetLevel();// + (SaveLoadManager.Getlevel() + 1);
@@ -46,6 +43,8 @@ public class InitialScreen : UIScreen
     }
     private void OnPlayButtonPressed()
     {
-        StartCoroutine(_gameManager._uiManager.ChangeUI(this));
+        _gameManager.OnLevelStartedEvent.Raise();
+       
+        
     }
 }
