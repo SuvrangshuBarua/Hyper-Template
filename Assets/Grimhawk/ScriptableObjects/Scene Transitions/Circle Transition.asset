@@ -37,5 +37,5 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   animationTime: 1
-  circleSprite: {fileID: 21300000, guid: 608ebda50bc90564cb12bfae3c116eb7, type: 3}
+  circleSprite: {fileID: 21300000, guid: 91ab9f3d0a97b41328991ca2ddc714d0, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}

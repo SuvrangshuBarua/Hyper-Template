@@ -14,6 +14,7 @@ namespace grimhawk.managers
 
         #region Private Variables
         [SerializeField] private InitialScreen initial;
+        [SerializeField] private HUDScreen HUD;
         [SerializeField] private SuccessScreen success;
         [SerializeField] private FailScreen failure;
         #endregion
@@ -42,6 +43,7 @@ namespace grimhawk.managers
             UIScreen uiScreen = screen switch
             {
                 MainScreens.Initial => initial,
+                MainScreens.HUD => HUD,
                 MainScreens.Success => success,
                 MainScreens.Fail => failure,
                 _ => throw new ArgumentOutOfRangeException(nameof(screen), screen, null)
@@ -57,6 +59,7 @@ namespace grimhawk.managers
         public enum MainScreens
         {
             Initial,
+            HUD,
             Success,
             Fail
         }

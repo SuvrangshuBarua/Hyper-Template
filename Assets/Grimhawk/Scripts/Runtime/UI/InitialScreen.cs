@@ -32,15 +32,15 @@ public class InitialScreen : UIScreen
     {
         gameObject.SetActive(true);
         UpdateLevelCounter();
-        StartCoroutine(_levelCounter.PlayInAnimation(1f));
-        yield return StartCoroutine(_playButton.PlayInAnimation(1f));
+        StartCoroutine(_levelCounter.PlayInAnimation(0.5f));
+        yield return StartCoroutine(_playButton.PlayInAnimation(0.5f));
         
     }
 
     public override IEnumerator PlayOutAnimation()
     {    
-        StartCoroutine(_levelCounter.PlayOutAnimation(1f));
-        yield return StartCoroutine(_playButton.PlayOutAnimation(1f));
+        StartCoroutine(_levelCounter.PlayOutAnimation(0.5f));
+        yield return StartCoroutine(_playButton.PlayOutAnimation(0.5f));
         
         gameObject.SetActive(false);
     }
