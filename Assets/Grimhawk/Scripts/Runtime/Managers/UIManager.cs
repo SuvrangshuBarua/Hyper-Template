@@ -27,7 +27,11 @@ namespace grimhawk.managers
         {
             if (ActiveScreen)
                 if(ActiveScreen.isActiveAndEnabled)
+                {
+                    ActiveScreen.Reset();
                     yield return StartCoroutine(ActiveScreen.PlayOutAnimation());
+                }
+                    
 
             ActiveScreen = uiScreen;
             if(ActiveScreen)
