@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using Unity.VisualScripting.Dependencies.NCalc;
 
 namespace grimhawk.core
 {
@@ -67,6 +68,15 @@ namespace grimhawk.core
                         PlayerPrefs.SetInt(_savedKey, locValue);
                     }
                     break;
+                case SettingTypes._uLong:
+                    {
+                        int lowBits, highBits;
+                        ulong locValue = (ulong)Convert.ChangeType(_localValue, typeof(ulong));
+                        SplituLong(locValue, out lowBits, out highBits);
+                        PlayerPrefs.SetInt(_savedKey + "_lowBits", lowBits);
+                        PlayerPrefs.SetInt(_savedKey + "_highBits", highBits);
+                    }
+                    break;
                 case SettingTypes._float:
                     {
                         float locValue = (float)Convert.ChangeType(_localValue, typeof(float));
@@ -98,7 +108,7 @@ namespace grimhawk.core
         }
         private void LoadFromPrefs()
         {
-            if (PlayerPrefs.HasKey(_savedKey))
+            if (PlayerPrefs.HasKey(_savedKey) || PlayerPrefs.HasKey(_savedKey + "_lowBits") || PlayerPrefs.HasKey(_savedKey + "_highBits"))
             {
                 switch (_type)
                 {
@@ -115,6 +125,17 @@ namespace grimhawk.core
                     case SettingTypes._int:
                         {
                             int prefValue = PlayerPrefs.GetInt(_savedKey);
+                            _localValue = (T)Convert.ChangeType(prefValue, typeof(T));
+                        }
+                        break;
+                    case SettingTypes._uLong:
+                        {
+                            int lowBits = PlayerPrefs.GetInt(_savedKey + "_lowBits");
+                            int highBits = PlayerPrefs.GetInt(_savedKey + "_highBits");
+
+                            ulong ret = (uint)highBits;
+                            ret = (ret << 64);
+                            ulong prefValue =(ulong)(ret | (ulong)(uint)lowBits);
                             _localValue = (T)Convert.ChangeType(prefValue, typeof(T));
                         }
                         break;
@@ -154,6 +175,8 @@ namespace grimhawk.core
                 return SettingTypes._bool;
             else if (typeof(T) == typeof(int))
                 return SettingTypes._int;
+            else if (typeof(T) == typeof(ulong))
+                return SettingTypes._uLong;
             else if (typeof(T) == typeof(float))
                 return SettingTypes._float;
             else if (typeof(T) == typeof(string))
@@ -169,12 +192,12 @@ namespace grimhawk.core
             else if (typeof(T) == typeof(Quaternion))
                 return SettingTypes._quaternion;
             else if (typeof(T) == typeof(Color))
-                return SettingTypes ._color;
+                return SettingTypes._color;
             else
             {
                 Debug.LogError("Type is Undefined!");
                 return SettingTypes._undefined;
-                
+
             }
         }
         static T Get(string key)
@@ -190,6 +213,7 @@ namespace grimhawk.core
         {
             _bool,
             _int,
+            _uLong,
             _float,
             _string,
             _dateTime,
@@ -274,7 +298,8 @@ namespace grimhawk.core
         public static void SetuLong(string key, ulong value)
         {
             int lowBits, highBits;
-            SplituLong(value, out lowBits, out highBits);
+            ulong locValue = (ulong)Convert.ChangeType(value, typeof(ulong));
+            SplituLong(locValue, out lowBits, out highBits);
             PlayerPrefs.SetInt(key + "_lowBits", lowBits);
             PlayerPrefs.SetInt(key + "_highBits", highBits);
         }

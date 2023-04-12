@@ -41,6 +41,7 @@ namespace grimhawk.managers
         public LevelManager _levelManager;
         public SceneManager _sceneManager;
         public InputManager _inputManager;
+        public DataManager _dataManager;
 
 
         #endregion
@@ -64,7 +65,7 @@ namespace grimhawk.managers
         private IEnumerator Start()
         {
             yield return null;
-            Instance._levelManager.Initialize(() =>
+            Instance._dataManager.Init(() =>
             {
                 Instance.OnDataLoadedEvent.Raise();
             });

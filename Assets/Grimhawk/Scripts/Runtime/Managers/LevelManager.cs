@@ -12,34 +12,10 @@ namespace grimhawk.managers
     public class LevelManager : GameBehavior
     {
         [SerializeField]
-        private PersistantData<int> _level;
-        private const int defaultValue = 0;
-        private const string saveFileName = "_LevelNumber";
-        [SerializeField]
         private int totalLevelNumber = 5;
         [SerializeField]
         private SceneTransitionMode _levelLoadStyle = SceneTransitionMode.None;
-        public int Level
-        {
-            private set
-            {
-                if (_level == null)
-                {
-                    _level = new PersistantData<int>(saveFileName, defaultValue);
-                }
-                _level.value = value;
-
-            }
-
-            get
-            {
-                if (_level == null)
-                {
-                    _level = new PersistantData<int>(saveFileName, defaultValue);
-                }
-                return _level;
-            }
-        }
+        
 
         
 
@@ -47,28 +23,21 @@ namespace grimhawk.managers
         {
             Input.backButtonLeavesApp = true;
         }
-        internal void IncrementLevel() => Level++;
+        internal void IncrementLevel() => _gameManager._dataManager.IncrementLevel();
         private int GetSceneIndex()
         {
-            return (Level % totalLevelNumber) + 1;
+            return (_gameManager._dataManager.Level % totalLevelNumber) + 1;
         }
         public int GetLevel()
         {
-            return Level + 1;
+            return _gameManager._dataManager.Level + 1;
         }
         private void OnWishdomReady()
         {
             LoadLevel();
         }
         
-        public void Initialize(Action OnLevelDataLoaded)
-        {
-            //TODO: DebugLog Colorizer class 
-#if UNITY_EDITOR
-            Debug.Log($"<color=white>--- You Are Playing Level : {GetLevel()} ---</color>");
-#endif
-            OnLevelDataLoaded?.Invoke();
-        }
+        
         public void LoadLevel()
         {
             _gameManager._sceneManager.LoadScene(GetSceneIndex(), _levelLoadStyle);
@@ -76,11 +45,14 @@ namespace grimhawk.managers
         protected override void OnDataLoaded()
         {
             base.OnDataLoaded();
+            
             OnWishdomReady();
+            _gameManager.OnSceneLoadBeginEvent.Raise();
         }
         protected override void OnSceneLoadBegin()
         {
             base.OnSceneLoadBegin();
+            Debug.Log($"<color=white>--- You Are Playing Level : {GetLevel()} ---</color>");
         }
 
         protected override void OnLevelComplete()
