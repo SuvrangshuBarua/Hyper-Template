@@ -4,9 +4,6 @@ using UnityEngine;
 using grimhawk.core;
 using NaughtyAttributes;
 using System;
-#if SUPERSONIC_WISDOM_SDK_INSTALLED
-using SupersonicWisdomSDK;
-#endif
 namespace grimhawk.managers
 {
     public class LevelManager : GameBehavior
