@@ -21,16 +21,16 @@ namespace grimhawk.managers
         {
             Input.backButtonLeavesApp = true;
         }
-        internal void IncrementLevel() => _gameManager._dataManager.IncrementLevel();
+        internal void IncrementLevel() => _gameManager.dataManager.IncrementLevel();
         private int GetSceneIndex()
         {
-            return (_gameManager._dataManager.Level % totalLevelNumber) + 1;
+            return (_gameManager.dataManager.Level % totalLevelNumber) + 1;
         }
         public int GetLevel()
         {
-            return _gameManager._dataManager.Level + 1;
+            return _gameManager.dataManager.Level + 1;
         }
-        private void OnWishdomReady()
+        private void OnSupersonicWisdomReady()
         {
             LoadLevel();
         }
@@ -38,19 +38,26 @@ namespace grimhawk.managers
         
         public void LoadLevel()
         {
-            _gameManager._sceneManager.LoadScene(GetSceneIndex(), _levelLoadStyle);
+            _gameManager.sceneManager.LoadScene(GetSceneIndex(), _levelLoadStyle);
         }
         protected override void OnDataLoaded()
         {
             base.OnDataLoaded();
-            
-            OnWishdomReady();
+#if SUPERSONIC_WISDOM_SDK_INSTALLED
+             SupersonicWisdom.Api.AddOnReadyListener(OnSupersonicWisdomReady);
+             SupersonicWisdom.Api.Initialize();
+#else
+            OnSupersonicWisdomReady();
+#endif
+
             _gameManager.OnSceneLoadBeginEvent.Raise();
         }
         protected override void OnSceneLoadBegin()
         {
             base.OnSceneLoadBegin();
+#if UNITY_EDITOR
             Debug.Log($"<color=white>--- You Are Playing Level : {GetLevel()} ---</color>");
+#endif
         }
 
         protected override void OnLevelComplete()

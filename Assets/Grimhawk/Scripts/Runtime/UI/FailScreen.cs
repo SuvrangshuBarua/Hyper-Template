@@ -51,7 +51,7 @@ public class FailScreen : UIScreen
     public void OnRetry()
     {
         //Handle LevelManager Code to Reload Same Level
-        _gameManager._levelManager.LoadLevel();
+        _gameManager.levelManager.LoadLevel();
     }
     protected override void OnSceneLoaded()
     {

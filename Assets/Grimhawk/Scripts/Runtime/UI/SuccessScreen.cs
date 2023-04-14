@@ -52,7 +52,7 @@ public class SuccessScreen : UIScreen
     {
         //Report Level should be iterated to next
         //Handle LevelManager Load Next Level Logic
-        _gameManager._levelManager.LoadLevel();
+        _gameManager.levelManager.LoadLevel();
     }
     protected override void OnSceneLoaded()
     {

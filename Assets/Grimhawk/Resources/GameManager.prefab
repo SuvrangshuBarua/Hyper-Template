@@ -2242,6 +2242,50 @@ MonoBehaviour:
   pixelThreshold: 15
   enableGesture: 0
   enableDrag: 0
+--- !u!1 &2889194763215280878
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7855630490201386544}
+  - component: {fileID: 4325563792818506462}
+  m_Layer: 0
+  m_Name: AnalyticsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7855630490201386544
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2889194763215280878}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6996146314910293117}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4325563792818506462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2889194763215280878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c22ec9dad8556f4095fea795d0e72de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3966782204600719403
 GameObject:
   m_ObjectHideFlags: 0
@@ -2877,8 +2921,9 @@ Transform:
   - {fileID: 9055949198989908271}
   - {fileID: 7265802472460122980}
   - {fileID: 5155556315197415623}
+  - {fileID: 7855630490201386544}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1614088664305026333
 MonoBehaviour:
@@ -2908,7 +2953,8 @@ MonoBehaviour:
   _OnLevelFailedEvent: {fileID: 11400000, guid: 8beb58b7953233e4f852315ff88f5bdd,
     type: 2}
   _uiManager: {fileID: 351210210576674595}
-  _levelManager: {fileID: 1214606416805841601}
-  _sceneManager: {fileID: 2852735778378370671}
-  _inputManager: {fileID: 5924704834025318457}
-  _dataManager: {fileID: 5387093171124410964}
+  levelManager: {fileID: 1214606416805841601}
+  sceneManager: {fileID: 2852735778378370671}
+  inputManager: {fileID: 5924704834025318457}
+  dataManager: {fileID: 5387093171124410964}
+  analyticsManager: {fileID: 4325563792818506462}

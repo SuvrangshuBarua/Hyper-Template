@@ -13,7 +13,7 @@ public class InitialScreen : UIScreen
 
     private void UpdateLevelCounter()
     {
-        _levelCounter.UIComponent.text = "Level " + _gameManager._levelManager.GetLevel();// + (SaveLoadManager.Getlevel() + 1);
+        _levelCounter.UIComponent.text = "Level " + _gameManager.levelManager.GetLevel();// + (SaveLoadManager.Getlevel() + 1);
     }
     protected override void OnEnable()
     {

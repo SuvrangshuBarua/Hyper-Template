@@ -38,10 +38,11 @@ namespace grimhawk.managers
         [Separator("Managers")]
         [Label("UI Manager")]
         public UIManager _uiManager;
-        public LevelManager _levelManager;
-        public SceneManager _sceneManager;
-        public InputManager _inputManager;
-        public DataManager _dataManager;
+        public LevelManager levelManager;
+        public SceneManager sceneManager;
+        public InputManager inputManager;
+        public DataManager dataManager;
+        public AnalyticsManager analyticsManager;
 
 
         #endregion
@@ -65,7 +66,7 @@ namespace grimhawk.managers
         private IEnumerator Start()
         {
             yield return null;
-            Instance._dataManager.Init(() =>
+            Instance.dataManager.Init(() =>
             {
                 Instance.OnDataLoadedEvent.Raise();
             });
