@@ -5,7 +5,7 @@ using TMPro;
 using Text = TMPro.TextMeshProUGUI;
 using grimhawk.core;
 using MyBox;
-using Unity.VisualScripting;
+using DG.Tweening;
 
 public class DataManager : GameBehavior
 {
@@ -20,6 +20,7 @@ public class DataManager : GameBehavior
     private PersistantData<int> _level;
 
     public Text currencyTextUIElement;
+    public Text deductTextUIElement;
 
     public int Level
     {
@@ -90,7 +91,8 @@ public class DataManager : GameBehavior
             StopCoroutine(_runningCoroutine );  
             currencyTextUIElement.text = CurrencyFormatter.FormattedCurrency(Currency);
         }
-
+        _runningCoroutine = DeductAnimationRoutine(amount);
+        StartCoroutine(_runningCoroutine);
         Currency -= amount;
 
         currencyTextUIElement.text = CurrencyFormatter.FormattedCurrency(Currency);
@@ -109,6 +111,26 @@ public class DataManager : GameBehavior
 
         Currency += extraAmount;
 
+    }
+
+    private IEnumerator DeductAnimationRoutine(ulong amount)
+    {
+        yield return null;
+        Sequence deductSequence = DOTween.Sequence();
+        deductSequence.PrependCallback(() =>
+        {
+            deductTextUIElement.SetAlpha(1);
+            deductTextUIElement.text = $"-{CurrencyFormatter.FormattedCurrency(amount, 0)}";
+        })
+                      .Append(deductTextUIElement.rectTransform.DOAnchorPosY(-100, 1f))
+                      .Join(deductTextUIElement.DOFade(0, 0.5f).SetDelay(0.5f))
+                      .OnComplete(() =>
+                      {
+                          deductTextUIElement.SetAlpha(0);
+                          deductTextUIElement.rectTransform.anchoredPosition = Vector2.zero;
+                      });
+        
+                                         
     }
 }
 
@@ -154,7 +176,7 @@ public class CurrencyFormatter
         if(perStepCount < 1)
         {
             perStepCount = 1;
-            duration = Time.deltaTime *  perStepCount * deltaAmount;
+            duration = Time.deltaTime /  perStepCount * deltaAmount;
         }
 
         int currentAmount = startAmount;
@@ -182,7 +204,7 @@ public class CurrencyFormatter
         if (perStepCount < 1)
         {
             perStepCount = 1;
-            duration = Time.deltaTime * deltaAmount * perStepCount;
+            duration = Time.deltaTime / deltaAmount * perStepCount;
         }
 
         ulong currentAmount = startAmount;
