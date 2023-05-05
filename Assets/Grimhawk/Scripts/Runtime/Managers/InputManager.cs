@@ -5,11 +5,11 @@ namespace grimhawk.managers
 {
     public class InputManager : GameBehavior
     {
-        [Header("Universal Settings")]
+        [Header("Universal Settings", "#CC99FF",default)]
 
         public float pixelThreshold = 15;
 
-        [Header("Gesture Settings")]
+        [Header("Gesture Settings", "#CC99FF", default)]
 
         #region Gesture-Public-Variables
         public bool enableGesture = false;
@@ -23,7 +23,7 @@ namespace grimhawk.managers
 
         #endregion
 
-        [Header("Drag Settings")]
+        [Header("Drag Settings", "#CC99FF", default)]
 
         #region  Drag-Public-Variables
         public bool enableDrag = false;
