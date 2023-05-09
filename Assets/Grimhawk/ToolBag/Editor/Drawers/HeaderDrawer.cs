@@ -2,14 +2,11 @@ using UnityEditor;
 using UnityEngine;
 
 [CustomPropertyDrawer(typeof(HeaderAttribute))]
-public class HeaderDrawer : DecoratorDrawer
+public class HeaderDrawer : DecoraterDrawerBase<HeaderAttribute>
 {
     #region Overrides of DecoratorDrawer
-    public override void OnGUI(Rect position)
-    {
-        if(!(attribute is HeaderAttribute headerAttribute)) return;
-
-        
+    protected override void OnGUISafe(Rect position, HeaderAttribute headerAttribute)
+    {       
         position = EditorGUI.IndentedRect(position);
         position.yMin += EditorGUIUtility.singleLineHeight * (headerAttribute.textHeightIncrease - 0.5f);
 
@@ -36,10 +33,14 @@ public class HeaderDrawer : DecoratorDrawer
         EditorGUI.DrawRect(postfixRect, headerAttribute.color); 
     }
 
-    public override float GetHeight()
+    protected override float GetHeightSafe(HeaderAttribute headerAttribute)
     {
-        HeaderAttribute headerAttribute = attribute as HeaderAttribute;
         return EditorGUIUtility.singleLineHeight + (headerAttribute?.textHeightIncrease + 2.5f ?? 0);
+    }
+
+    public override bool IsAttributeValid(PropertyAttribute attribute)
+    {
+        return attribute is HeaderAttribute;
     }
     #endregion
 }
