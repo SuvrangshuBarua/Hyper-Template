@@ -2,12 +2,14 @@ using UnityEditor;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Burst;
+using UnityEditor.SceneManagement;
 
 public class SceneSwitcher : EditorWindow
 {
     #region Private Variables
     private List<SceneAsset> _scenes = null;
     private List<Color> _buttonColors = null;
+    private bool _editMode = false;
 
     private GUILayoutOption _heightLayout;
     private Color _windowBackgroundColor = new Color(0.25f, 0.25f, 0.25f);
@@ -19,6 +21,7 @@ public class SceneSwitcher : EditorWindow
 
         _scenes = new List<SceneAsset>();
         _buttonColors = new List<Color>();
+        
 
         // AddScene();
 
@@ -46,7 +49,7 @@ public class SceneSwitcher : EditorWindow
     ///<summary>
     /// This method chooses black or white text color according to button color
     /// </summary>
-    private void UpdateTextColorAccordingToButtonColor(Color color, GUIStyle style)
+    private void ButtonTextColorCorrection(Color color, GUIStyle style)
     {
         Color.RGBToHSV(color, out float h, out float s, out float v);
         bool shouldColorBeWhite = (v < 0.7f || (s > 0.4f && (h < 0.1f || h > 0.55f)));
@@ -72,16 +75,89 @@ public class SceneSwitcher : EditorWindow
     #endregion
 
     #region SceneManagement
+
+    /// <summary>
+    /// Opens <param name="scene"/> 
+    /// </summary>
+    private void OpenScene(SceneAsset scene)
+    {
+        string scenePath = AssetDatabase.GetAssetPath(scene);
+        ///<summery>
+        /// Checks if there are any unsaved changes, if any ? prompts if user wants to save the changes 
+        /// If the use chooses to cancel, doesn't change scene
+        /// </summery>
+        if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
+        {
+            EditorSceneManager.OpenScene(scenePath);
+            SaveInPrefs();
+        }
+    }
+    /// <summary>
+    /// Adds a null scene slot 
+    /// </summary>
+    private void AddScene()
+    {
+        _scenes.Add(null);
+        _buttonColors.Add(Color.white); 
+    }
+    /// <summary>
+    /// Removes scene at specified  <param name="index"></param>
+    /// </summary>
+    private void RemoveScene(int index)
+    {
+        _scenes.RemoveAt(index);
+        _buttonColors.RemoveAt(index);
+        SaveInPrefs();  
+    }
+
     #endregion
 
     #region PresistantData
     ///<summary>
-    /// Save scenes with index and button color
-    /// Also consider if it is in editmode
+    /// Save total scene count, scene with index and button color
+    /// Also saves a boolean value that indicates if SceneSwitcher is in edit mode
     /// </summary>
+    private void SaveInPrefs()
+    {
+        //Scene Count
+        EditorPrefs.SetInt(PREFIX + "ScenesCount", _scenes.Count);
+        for (int i = 0; i < _scenes.Count; i++)
+        {
+            //Scenes
+            EditorPrefs.SetString(PREFIX + $"Scene_{i}", AssetDatabase.GetAssetPath(_scenes[i]));
 
+            //Button Colors
+            string sceneColor = ColorUtility.ToHtmlStringRGBA(_buttonColors[i]);
+            EditorPrefs.SetString(PREFIX + $"SceneColor_{i}", $"#{sceneColor}");
+        }
+
+        //Edit Mode
+        EditorPrefs.SetBool(PREFIX + "EditMode", _editMode);
+    }
     ///<summary>
     /// Load and perse preferences from saved data for the scenes
     /// </summary>
+    private void LoadFromPrefs()
+    {
+        int sceneCount = EditorPrefs.GetInt(PREFIX + "SceneCount");
+
+        _scenes.Clear();
+        _buttonColors.Clear();
+
+        for (int i = 0; i < sceneCount; i++)
+        {
+            //Scenes
+            //AddScene();
+
+            //Scenes
+            string scenePath = EditorPrefs.GetString(PREFIX + $"Scene_{i}");
+            _scenes[i] = AssetDatabase.LoadAssetAtPath<SceneAsset>(scenePath);
+
+            //Parse Button Color from Scene Color
+            string sceneColor = EditorPrefs.GetString(PREFIX + $"SceneColor_{i}");
+            ColorUtility.TryParseHtmlString(sceneColor, out Color buttonColor);
+            _buttonColors[i] = buttonColor; 
+        }
+    }
     #endregion
 }
