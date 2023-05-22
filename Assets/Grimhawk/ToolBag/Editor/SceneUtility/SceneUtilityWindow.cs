@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEditor.SceneManagement;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using System;
 using SceneManager = UnityEngine.SceneManagement.SceneManager;
 /// <summary>
@@ -31,6 +32,20 @@ public class SceneUtilityWindow : EditorWindow
     private string _lastScene;
     private string[] _tabs = new string[] { "Scenes", "Settings" };
     private string _searchFolder = "Assets";
+
+    private GUIStyle _style;
+    public GUIStyle Style { 
+        get 
+        {
+            _style = new GUIStyle(GUI.skin.label) { fontSize = 12 };
+            _style.normal.textColor = Color.cyan;
+            return _style;
+        }
+        set
+        {
+
+        }
+    }
     [MenuItem("Window/Scene Utility")]
     public static void Init()
     {
@@ -49,6 +64,8 @@ public class SceneUtilityWindow : EditorWindow
         _showPath = EditorPrefs.GetBool("SceneUtility.showPath", false);
         _showAddToBuild = EditorPrefs.GetBool("SceneUtility.showAddToBuild", true);
         _askBeforeDelete = EditorPrefs.GetBool("SceneUtility.askBeforeDelete", true);
+
+        
     }
     private void PlayModeStateChanged(PlayModeStateChange state)
     {
@@ -84,6 +101,7 @@ public class SceneUtilityWindow : EditorWindow
         }
         EditorGUILayout.EndVertical();
         EditorGUILayout.EndScrollView();
+        GUILayout.Label("Made by ♠Saiyajinn♠", EditorStyles.centeredGreyMiniLabel);
     }
     private void SettingsTabGUI()
     {
@@ -121,7 +139,20 @@ public class SceneUtilityWindow : EditorWindow
             var asset = UnityEditor.PackageManager.PackageInfo.FindForAssetPath(path);
             if (asset != null)
             {
-                // check for embedded / local
+                switch (asset.source)
+                {
+                    case PackageSource.Unknown:                        
+                    case PackageSource.Registry:                       
+                    case PackageSource.BuiltIn:                       
+                    case PackageSource.Git:                       
+                    case PackageSource.LocalTarball:
+                        continue;
+                    case PackageSource.Embedded:
+                        break;
+                    case PackageSource.Local:
+                        break;
+                    
+                }
             }
             switch (_scenesSource)
             {
@@ -143,7 +174,7 @@ public class SceneUtilityWindow : EditorWindow
             if(isOpen)
             {
                 GUILayout.Label( 
-                    sceneAsset.name,EditorStyles.whiteLabel) ;
+                    sceneAsset.name, Style ) ;
             }
             else
             {
