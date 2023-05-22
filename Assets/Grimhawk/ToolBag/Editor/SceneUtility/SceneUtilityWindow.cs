@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEditor.PackageManager;
 using System;
 using SceneManager = UnityEngine.SceneManagement.SceneManager;
+using System.Linq;
 /// <summary>
 /// Scene Utility window, an editor window for managing scene
 /// </summary>
@@ -17,12 +18,18 @@ public class SceneUtilityWindow : EditorWindow
         Project,
         Manual
     }
+    public enum BuildSceneOperation
+    {
+        Singular = 0,
+        Append = 1
+    }
     private Vector2 _scrollPosition;
     private Vector2 _scenesTabScrollPosition;
     private ScenesSource _scenesSource = ScenesSource.BuildSettings;
     private NewSceneMode _newSceneMode = NewSceneMode.Single;
     private NewSceneSetup _newSceneSetup = NewSceneSetup.DefaultGameObjects;
     private OpenSceneMode _openSceneMode = OpenSceneMode.Single;
+    private BuildSceneOperation _buildSceneOperation = BuildSceneOperation.Singular;
     private bool _showPath = false;
     private bool _showAddToBuild = true;
     private bool _askBeforeDelete = true;
@@ -61,6 +68,7 @@ public class SceneUtilityWindow : EditorWindow
         _newSceneSetup = (NewSceneSetup)EditorPrefs.GetInt("SceneUtility.newSceneSetup", (int)NewSceneSetup.DefaultGameObjects);
         _newSceneMode = (NewSceneMode)EditorPrefs.GetInt("SceneUtility.newSceneMode", (int)NewSceneMode.Single);
         _openSceneMode = (OpenSceneMode)EditorPrefs.GetInt("SceneUtility.openSceneMode", (int)OpenSceneMode.Single);
+        _buildSceneOperation = (BuildSceneOperation) EditorPrefs.GetInt("SceneUtility.buildSceneOperation", (int)BuildSceneOperation.Singular);
         _showPath = EditorPrefs.GetBool("SceneUtility.showPath", false);
         _showAddToBuild = EditorPrefs.GetBool("SceneUtility.showAddToBuild", true);
         _askBeforeDelete = EditorPrefs.GetBool("SceneUtility.askBeforeDelete", true);
@@ -79,6 +87,7 @@ public class SceneUtilityWindow : EditorWindow
         EditorPrefs.SetInt("SceneUtility.newSceneSetup", (int)_newSceneSetup);
         EditorPrefs.SetInt("SceneUtility.newSceneMode", (int)_newSceneMode);
         EditorPrefs.SetInt("SceneUtility.openSceneMode", (int)_openSceneMode);
+        EditorPrefs.SetInt("SceneUtility.buildSceneOperation", (int)_buildSceneOperation);
         EditorPrefs.SetBool("SceneUtility.showPath", _showPath);
         EditorPrefs.SetBool("SceneUtility.showAddToBuild", _showAddToBuild);
         EditorPrefs.SetBool("SceneUtility.askBeforeDelete", _askBeforeDelete);
@@ -110,8 +119,9 @@ public class SceneUtilityWindow : EditorWindow
         {
             _searchFolder = EditorGUILayout.TextField("Search Folder", _searchFolder);
         }
-        _newSceneSetup = (NewSceneSetup)EditorGUILayout.EnumPopup("New Scene Setup", _newSceneSetup); ;
-        _newSceneMode = (NewSceneMode)EditorGUILayout.EnumPopup("New Scene Mode", _newSceneMode);
+        //_newSceneSetup = (NewSceneSetup)EditorGUILayout.EnumPopup("New Scene Setup", _newSceneSetup); ;
+        //_newSceneMode = (NewSceneMode)EditorGUILayout.EnumPopup("New Scene Mode", _newSceneMode);
+        _buildSceneOperation = (BuildSceneOperation)EditorGUILayout.EnumPopup("Build Scene Operation", _buildSceneOperation);
         _openSceneMode = (OpenSceneMode)EditorGUILayout.EnumPopup("Open Scene Mode", _openSceneMode);
         _showPath = EditorGUILayout.Toggle("Show Path", _showPath);
         _showAddToBuild = EditorGUILayout.Toggle("Show Add To Build", _showAddToBuild);
@@ -254,6 +264,18 @@ public class SceneUtilityWindow : EditorWindow
             }
             _openSceneMode= openMode;   
         }
+        /*if(GUILayout.Button("Push To Build"))
+        {
+            BuildSceneOperation operation = _buildSceneOperation;
+            _buildSceneOperation = BuildSceneOperation.Append;
+            
+            for (int i = 0; i < _selectedScenes.Length; i++)
+            {
+                if (_selectedScenes[i])
+                    AddToBuildSettings(AssetDatabase.GUIDToAssetPath(_guids[i]));
+            }
+            _buildSceneOperation = operation;
+        }*/
         EditorGUILayout.EndHorizontal();
         EditorGUI.EndDisabledGroup();
         GUILayout.Label("General Actions →", EditorStyles.boldLabel);
@@ -287,18 +309,44 @@ public class SceneUtilityWindow : EditorWindow
     }
     private void AddToBuildSettings(string path)
     {
-        List<EditorBuildSettingsScene> scenes = new List<EditorBuildSettingsScene>();
-        scenes.Add(new EditorBuildSettingsScene(path, true));
-        EditorBuildSettings.scenes = scenes.ToArray();
+        List<EditorBuildSettingsScene> scenes;
+        switch ((int)_buildSceneOperation)
+        {
+            case 0:
+                scenes = new List<EditorBuildSettingsScene>();
+                scenes.Add(new EditorBuildSettingsScene(path, true));
+                EditorBuildSettings.scenes = scenes.ToArray();
+                break;
+            case 1:
+                scenes = EditorBuildSettings.scenes.ToList();
+                scenes.Add(new EditorBuildSettingsScene(path, true));
+                EditorBuildSettings.scenes = scenes.ToArray();
+                break;
+        }
+        
+        
+        
     }
     private void RemoveFromBuildSettings(string path)
     {
-        List<EditorBuildSettingsScene> scenes = new List<EditorBuildSettingsScene>();
-        scenes.RemoveAll(scene =>
+        List<EditorBuildSettingsScene> scenes;
+        switch ((int)_buildSceneOperation)
         {
-            return scene.path == path;
-        });
-        EditorBuildSettings.scenes = scenes.ToArray();
+            case 0:
+                scenes = new List<EditorBuildSettingsScene>();
+                scenes.RemoveAll(scene =>
+                {
+                    return scene.path == path;
+                });
+                EditorBuildSettings.scenes = scenes.ToArray();
+                break;
+            case 1:
+                scenes= EditorBuildSettings.scenes.ToList();
+                scenes.Remove(scenes.Find((editorBuildScene) => editorBuildScene.path == path));
+                EditorBuildSettings.scenes = scenes.ToArray();
+                break;
+        }
+        
     }
 }
 
