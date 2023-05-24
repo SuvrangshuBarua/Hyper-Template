@@ -25,7 +25,7 @@ public class HeaderDrawer : DecoraterDrawerBase<HeaderAttribute>
         Vector2 textSize = style.CalcSize(label);
         float separatorWidth = (position.width - (textSize.x + 20f)) / 2f;
         Rect prefixRect = new Rect(position.xMin - 5f, position.yMin + 3f, separatorWidth, headerAttribute.textHeightIncrease);
-        Rect labelRect =  new Rect(position.xMin + separatorWidth, position.yMin - 3f, textSize.x, position.height);
+        Rect labelRect =  new Rect(position.xMin + separatorWidth, position.yMin - 5f, textSize.x, position.height);
         Rect postfixRect = new Rect(position.xMin + separatorWidth + 5f + textSize.x, position.yMin + 3f, separatorWidth, headerAttribute.textHeightIncrease);
 
         EditorGUI.DrawRect(prefixRect, headerAttribute.color);
@@ -35,7 +35,7 @@ public class HeaderDrawer : DecoraterDrawerBase<HeaderAttribute>
 
     protected override float GetHeightSafe(HeaderAttribute headerAttribute)
     {
-        return EditorGUIUtility.singleLineHeight + (headerAttribute?.textHeightIncrease + 2.5f ?? 0);
+        return EditorGUIUtility.singleLineHeight + (headerAttribute?.textHeightIncrease + 5f ?? 0);
     }
 
     public override bool IsAttributeValid(PropertyAttribute attribute)
