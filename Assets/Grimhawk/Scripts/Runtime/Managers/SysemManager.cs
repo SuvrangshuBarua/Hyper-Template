@@ -86,7 +86,7 @@ namespace grimhawk.managers
         #region Dependency Loader
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void OnBeforeSceneLoadRuntimeMethod() {
-            SysemManager gameManager = Instantiate(Resources.Load<SysemManager>("GameManager"));
+            SysemManager gameManager = Instantiate(Resources.Load<SysemManager>("SystemManager"));
 
             // TODO : Also initialize any other scripts that shall be useful
 
