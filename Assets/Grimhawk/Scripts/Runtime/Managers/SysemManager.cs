@@ -9,10 +9,10 @@ using MyBox;
 namespace grimhawk.managers
 {
     [DefaultExecutionOrder(-1000000)]
-    public class GameManager : GameEventListener
+    public class SysemManager : GameEventListener
     {
         #region Public Variables
-        public static GameManager Instance { get; private set; }
+        public static SysemManager Instance { get; private set; }
         public bool IsThisLevelActive { get; private set; } = false;
 
         public GameEvent OnDataLoadedEvent { get => _OnDataLoadedEvent; }
@@ -86,7 +86,7 @@ namespace grimhawk.managers
         #region Dependency Loader
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void OnBeforeSceneLoadRuntimeMethod() {
-            GameManager gameManager = Instantiate(Resources.Load<GameManager>("GameManager"));
+            SysemManager gameManager = Instantiate(Resources.Load<SysemManager>("GameManager"));
 
             // TODO : Also initialize any other scripts that shall be useful
 

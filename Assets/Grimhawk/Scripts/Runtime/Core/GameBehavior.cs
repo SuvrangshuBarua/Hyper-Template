@@ -12,7 +12,7 @@ public abstract class GameBehavior : GameEventListener
 
     #endregion
     #region Protected Variables
-    protected GameManager _gameManager { get; private set; }
+    protected SysemManager _gameManager { get; private set; }
 
     #endregion
 
@@ -23,7 +23,7 @@ public abstract class GameBehavior : GameEventListener
         if(!IsRegistered)
         {
             IsRegistered = true;
-            _gameManager = GameManager.Instance;
+            _gameManager = SysemManager.Instance;
             _gameManager.OnSceneLoadBeginEvent.RegisterEvent(this, OnSceneLoadBegin);
             _gameManager.OnSceneLoadedEvent.RegisterEvent(this, OnSceneLoaded);
             _gameManager.OnDataLoadedEvent.RegisterEvent(this, OnDataLoaded);
