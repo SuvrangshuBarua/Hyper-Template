@@ -24,7 +24,7 @@ public class MeshRaycast : MonoBehaviour
             for (int i = 0; i < meshDuplicator.vertices.Length; i++)
             {
                 Vector3 direction = meshDuplicator.vertices[i] - _transform.position;
-                float distance = direction.magnitude;   
+                float distance = direction.sqrMagnitude;   
 
                 if(distance <= deformationRadius)
                 {
