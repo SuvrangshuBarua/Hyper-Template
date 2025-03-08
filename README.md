@@ -1,4 +1,4 @@
-# Game Development Framework
+# Grim-Tools
 
 This repository provides a solid foundation for building efficient and customizable games using a modular, event-driven architecture. The framework leverages the flexibility of Scriptable Objects and prioritizes ease of use to streamline development workflows.
 
